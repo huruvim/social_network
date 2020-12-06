@@ -4,6 +4,8 @@ let rerenderEntireTree = () => {
     console.log('State has been changed')
 }
 
+const love = []
+
 export type PostType = {
     id: number
     message: string
