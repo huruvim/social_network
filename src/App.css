@@ -1,0 +1,15 @@
+.app-wrapper {
+    margin: auto 50px;
+
+    display: grid;
+    grid-template-areas:"h h"   /*сколько в нашей разметке строк* т.е. 1 ст для хедера 2 ст для всго остольного*/
+                        "n c"; /*сколько всего колонок - гловально только 2*/
+    grid-template-rows:    70px 800px;
+    grid-template-columns: 200px 1200px;
+    gap: 15px 2px;
+}
+
+.app-wrapper-content {
+    grid-area: c;
+    background-color: #e0e0eb;
+}

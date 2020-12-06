@@ -1,0 +1,35 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+}
+.dialogsItems{
+    padding: 20px;
+    background-color: darkgray;
+}
+.dialogsItems .dialog {
+    padding: 20px;
+    background-color: burlywood;
+
+}
+.dialogs .dialogsItems {
+    color: firebrick;
+    font-size: 20px;
+    /*text-decoration: none;*/
+}
+.dialogs .dialogsItems .active {
+    color: red;
+}
+.messages {
+
+    padding: 20px;
+    background-color: darkgray;
+}
+.messages .message {
+    padding: 20px;
+    background-color: burlywood;
+}
+.send {
+    margin-left: 50 px;
+    height: 50px;
+    width: 80px;
+}
