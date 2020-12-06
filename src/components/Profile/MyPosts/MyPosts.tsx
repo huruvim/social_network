@@ -1,16 +1,15 @@
 import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import {ProfilePageType, PostType} from "../../../redux/state";
+import {PostType, ProfilePageType} from "../../../redux/state";
 
 type StateType = {
-    state: ProfilePageType
-    message: string
-    addPostCallback: (postMessage: string) => void
+    posts: Array<PostType>
+    addPostCallback: () => void
     changeNewTextCallback: (NewMessage: string) => void
     newPostText: string
-    posts: Array<PostType>
-    likesCount: number
+    // posts: Array<PostType>
+    // likesCount: number
 }
 
 const MyPosts = (props: StateType) => {
@@ -19,7 +18,7 @@ const MyPosts = (props: StateType) => {
         props.posts.map( p => <div> <Post message={p.message} likesCount={p.likesCount}/> </div> );
 
     const addPost = () => {
-        props.addPostCallback(props.message);
+        props.addPostCallback();
     }
 
     const newTextChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -33,8 +32,10 @@ const MyPosts = (props: StateType) => {
             <h3>My posts</h3>
             <div>
                 <div>
-                    <textarea onChange={newTextChangeHandler}
-                              value={props.newPostText}/>
+                    <textarea
+                        onChange={newTextChangeHandler}
+                        value={props.newPostText}
+                    />
                 </div>
                 <div>
                     <button onClick={addPost}>Add Post</button>

@@ -1,18 +1,7 @@
-// import {rerenderEntireTree} from "../render";
-
-let rerenderEntireTree = () => {
-    console.log('State has been changed')
-}
-
-const love = []
-
 export type PostType = {
     id: number
     message: string
     likesCount: number
-}
-export type PostTextType = {
-    newPostText: string
 }
 export type DialogsType = {
     name: string
@@ -37,12 +26,17 @@ export type RootStateType = {
     dialogsPage: DialogPageType
     sidebar: SidebarType
 }
+export type StoreType = {
+    _state: RootStateType
+    getState: () => RootStateType
+    _callSubscriber: () => void
+    addPostCallback: () => void
+    changeNewTextCallback: (NewText: string) => void
+    subscriber: (observer: () => void) => void
+}
 
-// export type PropsType = {
-//     addPost: (postMessage: string) => void
-// }
-
-let state: RootStateType = {
+const store: StoreType = {
+    _state: {
     profilePage: {
         posts: [
             {id: 1, message: "What hove you done, Tony?", likesCount: 12},
@@ -70,28 +64,29 @@ let state: RootStateType = {
         ]
     },
     sidebar: {}
-}
-
-// window.state = state;
-
-export const addPostCallback = () => {
-    let newPost: PostType = {
-        id: 5,
-        message: state.profilePage.posts[1].message,
-        likesCount: 0,
+},
+    getState () {
+        return this._state
+    },
+    _callSubscriber () {
+        console.log('State has been changed')
+    },
+    addPostCallback () {
+        let newPost: PostType = {
+            id: 5,
+            message: this._state.profilePage.newPostText,
+            likesCount: 0,
+        }
+        this._state.profilePage.posts.unshift(newPost);
+        this._state.profilePage.newPostText = '';
+        this._callSubscriber()
+    },
+    changeNewTextCallback (NewText: string) {
+        this._state.profilePage.newPostText = NewText
+        this._callSubscriber()
+    },
+    subscriber (observer) {
+        this._callSubscriber = observer;
     }
-    state.profilePage.posts.push(newPost);
-    state.profilePage.newPostText = '';
-    rerenderEntireTree()
 }
-
-export const changeNewTextCallback = (NewText: string) => {
-    state.profilePage.newPostText = NewText
-    rerenderEntireTree()
-}
-
-export const subscriber = (observer: () => void) => {
-    rerenderEntireTree = observer;
-}
-
-export default state;
+export default store;

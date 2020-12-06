@@ -1,5 +1,5 @@
 import * as serviceWorker from './serviceWorker';
-import state, {addPostCallback, changeNewTextCallback, subscriber} from "./redux/state";
+import store from "./redux/state";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -10,19 +10,21 @@ import {BrowserRouter} from 'react-router-dom';
 const rerenderEntireTree = () => {
     ReactDOM.render(
         <BrowserRouter>
-            <App state={state}
-                 addPostCallback={addPostCallback}
-                 changeNewTextCallback={changeNewTextCallback}
-                 message={state.profilePage.posts[1].message}
-                 newPostText={state.profilePage.newPostText}
-                 likesCount={state.profilePage.posts[2].likesCount}
+            <App
+                state={store.getState()}
+                addPostCallback={store.addPostCallback.bind(store)}
+                changeNewTextCallback={store.changeNewTextCallback.bind(store)}
+                // state={store.getState()}
+                // message={store._state.profilePage.posts[1].message}
+                // newPostText={store._state.profilePage.newPostText}
+                // likesCount={store._state.profilePage.posts[2].likesCount}
             />,
         </BrowserRouter>, document.getElementById('root'));
 }
 
 rerenderEntireTree();
 
-subscriber(rerenderEntireTree)
+store.subscriber(rerenderEntireTree)
 
 
 // If you want your app to work offline and load faster, you can change

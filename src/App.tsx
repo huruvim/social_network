@@ -8,45 +8,48 @@ import Dialogs from "./components/Dialogs/Dialogs";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {PostTextType, RootStateType} from './redux/state'
+import {RootStateType, StoreType} from './redux/state'
 
 type StateType = {
     state: RootStateType
-    likesCount: number
-    newPostText: string
-    message: string
+    // state: RootStateType
+    // likesCount: number
+    // newPostText: string
+    // message: string
     changeNewTextCallback: (newMessage: string) => void
-    addPostCallback: (postMessage: string) => void
+    addPostCallback: () => void
 
 }
 
-const App = (props: StateType) => {
+const App: React.FC<StateType> = (props) => {
     return (
-            <div className='app-wrapper'>
-                <Header/>
-                <Navbar/>
-                <div className='app-wrapper-content'>
-                    <Route path="/dialogs"
-                           render={() => <Dialogs state={props.state.dialogsPage} />}/>
+        <div className='app-wrapper'>
+            <Header/>
+            <Navbar/>
+            <div className='app-wrapper-content'>
+
+                <Route path="/dialogs"
+                       render={() => <Dialogs
+                           dialogsPage={props.state.dialogsPage}
+                       />}/>
+
+                <Route path="/profile"
+                       render={() => <Profile
+                           profilePage={props.state.profilePage}
+                           // likesCount={props.likesCount}
+                           // newPostText={props.newPostText}
+                           // message={props.message}
+                           changeNewTextCallback={props.changeNewTextCallback}
+                           addPostCallback={props.addPostCallback}
+
+                       />}/>
 
 
-                    <Route path="/profile"
-                           render={() => <Profile
-                               state={props.state.profilePage}
-                               likesCount={props.likesCount}
-                               newPostText={props.newPostText}
-                               message={props.message}
-                               changeNewTextCallback={props.changeNewTextCallback}
-                               addPostCallback={props.addPostCallback}
-                           /> }/>
-
-
-
-                    <Route path="/news" render={() => <News/>}/>
-                    <Route path="/music" render={() => <Music/>}/>
-                    <Route path="/settings" render={() => <Settings/>}/>
-                </div>
+                <Route path="/news" render={() => <News/>}/>
+                <Route path="/music" render={() => <Music/>}/>
+                <Route path="/settings" render={() => <Settings/>}/>
             </div>
+        </div>
     );
 }
 

@@ -6,14 +6,14 @@ import {DialogPageType} from "../../redux/state";
 
 
 type StateType = {
-    state: DialogPageType
+    dialogsPage: DialogPageType
 }
 
 
 const Dialogs = (props: StateType) => {
 
-    const dialogsElements = props.state.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>);
-    const messagesElements = props.state.messages.map(m => <Message message={m.message} id={m.id} likesCount={m.likesCount}/>)
+    const dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>);
+    const messagesElements = props.dialogsPage.messages.map(m => <Message message={m.message} id={m.id} likesCount={m.likesCount}/>)
 
     const newMessageElement = React.createRef<HTMLTextAreaElement>()
 
