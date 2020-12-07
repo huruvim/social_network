@@ -28,12 +28,21 @@ export type RootStateType = {
 }
 export type StoreType = {
     _state: RootStateType
-    getState: () => RootStateType
     _callSubscriber: () => void
-    addPostCallback: () => void
-    changeNewTextCallback: (NewText: string) => void
-    subscriber: (observer: () => void) => void
+    getState: () => RootStateType
+    subscribe: (observer: () => void) => void
+    dispatch: (action: ActionsTypes) => void
 }
+
+export type AddPostActionType = {
+    type: 'ADD-POST'
+    newPostText: string
+}
+export type ChangeNewTextActionType = {
+    type: 'CHANGE-NEW-TEXT'
+    newText: string
+}
+export type ActionsTypes = AddPostActionType | ChangeNewTextActionType
 
 const store: StoreType = {
     _state: {
@@ -65,28 +74,29 @@ const store: StoreType = {
     },
     sidebar: {}
 },
-    getState () {
-        return this._state
-    },
     _callSubscriber () {
         console.log('State has been changed')
     },
-    addPostCallback () {
-        let newPost: PostType = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likesCount: 0,
-        }
-        this._state.profilePage.posts.unshift(newPost);
-        this._state.profilePage.newPostText = '';
-        this._callSubscriber()
+    getState () {
+        return this._state
     },
-    changeNewTextCallback (NewText: string) {
-        this._state.profilePage.newPostText = NewText
-        this._callSubscriber()
-    },
-    subscriber (observer) {
+    subscribe (observer) {
         this._callSubscriber = observer;
+    },
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            let newPost: PostType = {
+                id: 5,
+                message: action.newPostText,
+                likesCount: 0,
+            }
+            this._state.profilePage.posts.unshift(newPost);
+            this._state.profilePage.newPostText = '';
+            this._callSubscriber()
+        } else if ( action.type === 'CHANGE-NEW-TEXT') {
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscriber()
+        }
     }
 }
 export default store;

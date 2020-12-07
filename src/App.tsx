@@ -8,7 +8,7 @@ import Dialogs from "./components/Dialogs/Dialogs";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {RootStateType, StoreType} from './redux/state'
+import {AddPostActionType, ChangeNewTextActionType, RootStateType, ActionsTypes} from './redux/state'
 
 type StateType = {
     state: RootStateType
@@ -16,9 +16,9 @@ type StateType = {
     // likesCount: number
     // newPostText: string
     // message: string
-    changeNewTextCallback: (newMessage: string) => void
-    addPostCallback: () => void
-
+    // changeNewTextCallback: (newMessage: string) => void
+    // addPostCallback: () => void
+    dispatch: (action: ActionsTypes) => void
 }
 
 const App: React.FC<StateType> = (props) => {
@@ -36,11 +36,9 @@ const App: React.FC<StateType> = (props) => {
                 <Route path="/profile"
                        render={() => <Profile
                            profilePage={props.state.profilePage}
-                           // likesCount={props.likesCount}
-                           // newPostText={props.newPostText}
-                           // message={props.message}
-                           changeNewTextCallback={props.changeNewTextCallback}
-                           addPostCallback={props.addPostCallback}
+                           dispatch={props.dispatch}
+                           // changeNewTextCallback={props.changeNewTextCallback}
+                           // addPostCallback={props.addPostCallback}
 
                        />}/>
 

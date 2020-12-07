@@ -1,12 +1,13 @@
 import React from 'react';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ProfilePageType, StoreType} from "../../redux/state";
+import {ActionsTypes, AddPostActionType, ChangeNewTextActionType, ProfilePageType, StoreType} from "../../redux/state";
 
 type StateType = {
     profilePage: ProfilePageType
-    addPostCallback: () => void
-    changeNewTextCallback: (NewMessage: string) => void
+    dispatch: (action: ActionsTypes) => void
+    // addPostCallback: () => void
+    // changeNewTextCallback: (NewMessage: string) => void
     // newPostText: string
     // message: string
     // store: StoreType
@@ -23,8 +24,9 @@ const Profile = (props: StateType) => {
             <MyPosts
                 posts={props.profilePage.posts}
                 newPostText={props.profilePage.newPostText}
-                addPostCallback={props.addPostCallback}
-                changeNewTextCallback={props.changeNewTextCallback}
+                dispatch={props.dispatch}
+                // addPostCallback={props.addPostCallback}
+                // changeNewTextCallback={props.changeNewTextCallback}
                 // store={}
                 // likesCount={props.likesCount}
                 // posts={props.state.posts}

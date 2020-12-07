@@ -12,19 +12,16 @@ const rerenderEntireTree = () => {
         <BrowserRouter>
             <App
                 state={store.getState()}
-                addPostCallback={store.addPostCallback.bind(store)}
-                changeNewTextCallback={store.changeNewTextCallback.bind(store)}
-                // state={store.getState()}
-                // message={store._state.profilePage.posts[1].message}
-                // newPostText={store._state.profilePage.newPostText}
-                // likesCount={store._state.profilePage.posts[2].likesCount}
+                dispatch={store.dispatch.bind(store)}
+                // addPostCallback={store.addPostCallback.bind(store)}
+                // changeNewTextCallback={store.changeNewTextCallback.bind(store)}
             />,
         </BrowserRouter>, document.getElementById('root'));
 }
 
 rerenderEntireTree();
 
-store.subscriber(rerenderEntireTree)
+store.subscribe(rerenderEntireTree)
 
 
 // If you want your app to work offline and load faster, you can change
