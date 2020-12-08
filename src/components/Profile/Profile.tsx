@@ -1,18 +1,11 @@
 import React from 'react';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ActionsTypes, AddPostActionType, ChangeNewTextActionType, ProfilePageType, StoreType} from "../../redux/state";
+import {ActionsTypes, ProfilePageType} from "../../redux/state";
 
 type StateType = {
     profilePage: ProfilePageType
     dispatch: (action: ActionsTypes) => void
-    // addPostCallback: () => void
-    // changeNewTextCallback: (NewMessage: string) => void
-    // newPostText: string
-    // message: string
-    // store: StoreType
-    // likesCount: number
-
 }
 
 

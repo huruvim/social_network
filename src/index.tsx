@@ -13,8 +13,6 @@ const rerenderEntireTree = () => {
             <App
                 state={store.getState()}
                 dispatch={store.dispatch.bind(store)}
-                // addPostCallback={store.addPostCallback.bind(store)}
-                // changeNewTextCallback={store.changeNewTextCallback.bind(store)}
             />,
         </BrowserRouter>, document.getElementById('root'));
 }
