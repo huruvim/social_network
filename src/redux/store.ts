@@ -15,14 +15,14 @@ export type MessageType = {
     message: string
     id: number
 }
-export type ProfilePageType = {
-    posts: Array<PostType>
-    newPostText: string
-}
 export type DialogPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessageType>
     newMessageBody: string
+}
+export type ProfilePageType = {
+    posts: Array<PostType>
+    newPostText: string
 }
 export type SidebarType = {}
 export type RootStateType = {
@@ -47,16 +47,6 @@ export type ActionsTypes =
 
 const store: StoreType = {
     _state: {
-        profilePage: {
-            posts: [
-                {id: 1, message: "What hove you done, Tony?", likesCount: 12},
-                {id: 2, message: "This is my post", likesCount: 13},
-                {id: 3, message: "This is my second post", likesCount: 15},
-                {id: 4, message: "This is my new post", likesCount: 22},
-                {id: 5, message: "This is my first post", likesCount: 1}
-            ],
-            newPostText: ""
-        },
         dialogsPage: {
             dialogs: [
                 {id: 1, name: "Kolia"},
@@ -73,6 +63,16 @@ const store: StoreType = {
                 {id: 5, message: "yo"}
             ],
             newMessageBody: ''
+        },
+        profilePage: {
+            posts: [
+                {id: 1, message: "What hove you done, Tony?", likesCount: 12},
+                {id: 2, message: "This is my post", likesCount: 13},
+                {id: 3, message: "This is my second post", likesCount: 15},
+                {id: 4, message: "This is my new post", likesCount: 22},
+                {id: 5, message: "This is my first post", likesCount: 1}
+            ],
+            newPostText: ""
         },
         sidebar: {}
     },
