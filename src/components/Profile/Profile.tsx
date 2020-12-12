@@ -1,7 +1,7 @@
 import React from 'react';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ActionsTypes, ProfilePageType} from "../../redux/state";
+import {ActionsTypes, ProfilePageType} from "../../redux/store";
 
 type StateType = {
     profilePage: ProfilePageType
@@ -18,11 +18,6 @@ const Profile = (props: StateType) => {
                 posts={props.profilePage.posts}
                 newPostText={props.profilePage.newPostText}
                 dispatch={props.dispatch}
-                // addPostCallback={props.addPostCallback}
-                // changeNewTextCallback={props.changeNewTextCallback}
-                // store={}
-                // likesCount={props.likesCount}
-                // posts={props.state.posts}
             />
         </div>
     )
