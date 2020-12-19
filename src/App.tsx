@@ -24,10 +24,8 @@ const App: React.FC = () => {
 
                 <Route path="/dialogs"
                        render={ () => <DialogsContainer /> }/>
-
                 <Route path="/profile"
                        render={ () => <Profile/> }/>
-
 
                 <Route path="/news" render={() => <News/>}/>
                 <Route path="/music" render={() => <Music/>}/>

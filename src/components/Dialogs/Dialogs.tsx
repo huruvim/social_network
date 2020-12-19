@@ -1,14 +1,14 @@
 import React, {ChangeEvent} from 'react';
-import Style from './Dialogs.module.css';
+import s from './Dialogs.module.css';
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {ActionsTypes, DialogPageType} from "../../redux/store";
+import {DialogPageType} from "../../redux/store";
 
 
 type PropsType = {
     dialogsPage: DialogPageType
-    updateNewMessageBodyAC: (body: string) => void
-    sendMessageAC: () => void
+    updateNewMessageBody: (body: string) => void
+    sendMessage: () => void
 }
 
 
@@ -16,39 +16,34 @@ const Dialogs = (props: PropsType) => {
 
     const state = props.dialogsPage
 
-    const dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>);
-    const messagesElements = props.dialogsPage.messages.map(m => <Message message={m.message} id={m.id} />)
-    const newMessageBody = props.dialogsPage.newMessageBody;
+    const dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>);
+    const messagesElements = state.messages.map(m => <Message message={m.message} id={m.id}/>)
+    const newMessageBody = state.newMessageBody;
 
     const onSendMessageClick = () => {
-        props.sendMessageAC()
-        // props.dispatch(sendMessageAC())
+        props.sendMessage()
     }
 
     const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const body = e.target.value
-        props.updateNewMessageBodyAC(body)
-        // props.dispatch(updateNewMessageBodyAC(body))
+        props.updateNewMessageBody(body)
     }
 
     return (
-        <div className={Style.dialogs}>
-
-            <div className={Style.dialogsItems}>
+        <div className={s.dialogs}>
+            <div className={s.dialogsItems}>
                 {dialogsElements}
             </div>
-
-            <div className={Style.messages}>
+            <div className={s.messages}>
                 <div>{messagesElements}</div>
                 <div>
                     <div><span><textarea value={newMessageBody}
                                          onChange={onNewMessageChange}
                                          placeholder={`Enter your message`}>
                     </textarea></span></div>
-                    <div><span><button className={Style.send} onClick={onSendMessageClick}>SEND</button></span></div>
+                    <div><span><button className={s.send} onClick={onSendMessageClick}>SEND</button></span></div>
                 </div>
             </div>
-
         </div>
     )
 }

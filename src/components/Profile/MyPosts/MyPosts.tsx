@@ -20,18 +20,24 @@ const MyPosts = (props: PropsType) => {
     const addPost = () => {
         props.addNewPost()
     }
-
+    // const onKeyPress = (e: React.KeyboardEvent) => {
+    //     if (e.key === 'Enter') {
+    //     props.addNewPost()
+    // }
+// }
     const newTextChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const text = (e.currentTarget.value);
         props.updateNewPostText(text)
     }
 
     return (
+
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
                 <div>
                     <textarea
+                        placeholder={"Enter your post"}
                         onChange={newTextChangeHandler}
                         value={props.newPostText}
                     />

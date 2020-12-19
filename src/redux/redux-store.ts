@@ -13,5 +13,7 @@ const store: Store = createStore(reducer)
 
 export type AppRootStateType = ReturnType<typeof reducer>
 
+// @ts-ignore
+window.store = store
 
 export default store
