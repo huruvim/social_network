@@ -20,11 +20,7 @@ const MyPosts = (props: PropsType) => {
     const addPost = () => {
         props.addNewPost()
     }
-    // const onKeyPress = (e: React.KeyboardEvent) => {
-    //     if (e.key === 'Enter') {
-    //     props.addNewPost()
-    // }
-// }
+
     const newTextChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const text = (e.currentTarget.value);
         props.updateNewPostText(text)

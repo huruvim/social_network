@@ -2,6 +2,23 @@ import profileReducer, {addPostAC, changeNewTextAC} from "./profile-reducer";
 import dialogsReducer, { sendMessageAC, updateNewMessageBodyAC } from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 
+export type UserLocationType = {
+    city: string,
+    country: string
+}
+
+export type UserType = {
+    id: number,
+    photoURL: string
+    followed: boolean,
+    fullName: string,
+    status: string,
+    location: UserLocationType
+}
+export type UsersType = {
+    users: Array<UserType>
+}
+
 export type PostType = {
     id: number
     message: string
