@@ -1,7 +1,7 @@
 import profileReducer, {addPostAC, changeNewTextAC} from "./profile-reducer";
 import dialogsReducer, { sendMessageAC, updateNewMessageBodyAC } from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
-import {followAC, setUsersAC, unfollowAC, setCurrentPageAC, setTotalUsersCountAC} from "./users-reducer";
+import {follow, setUsers, unfollow, setCurrentPage, setTotalUsersCount, toggleIsFetching} from "./users-reducer";
 
 export type UserLocationType = {
     // city: string,
@@ -61,11 +61,12 @@ export type ActionsTypes =
     | ReturnType<typeof changeNewTextAC>
     | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof updateNewMessageBodyAC>
-    | ReturnType<typeof followAC>
-    | ReturnType<typeof unfollowAC>
-    | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof setCurrentPageAC>
-    | ReturnType<typeof setTotalUsersCountAC>
+    | ReturnType<typeof follow>
+    | ReturnType<typeof unfollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setTotalUsersCount>
+    | ReturnType<typeof toggleIsFetching>
 
 
 
