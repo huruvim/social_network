@@ -1,82 +1,102 @@
 import React from 'react';
 import s from './Users.module.css';
-import { UserType } from '../../redux/store';
+import axios, {AxiosResponse} from 'axios'
+import userPhoto from '../../assets/images/alternative-img.png';
 
 type PropsType = {
-    users: Array<UserType>
+    users: Array<any>
+    pageSize: number
+    TotalUsersCount: number
+    currentPage: number
     follow: (userID: number) => void
     unfollow: (userID: number) => void
     setUsers: (users: any) => void
+    setCurrentPage: (currentPage: number) => void
+    setTotalUsersCount: (totalCount: number) => void
+}
+export type UsersType = {
+    items: Array<UsersInfoType>
+    totalCount: number
 }
 
-const Users = (props: PropsType) => {
+export type UsersInfoType = {
+    name: string
+    id: number
+    uniqueUrlName: null
+    photos: { small: any, large: any }
+    status: null
+    followed: boolean
+}
 
-    if (props.users.length === 0) {
-        props.setUsers([
-                {
-                    id: 1,
-                    photoURL: 'https://hips.hearstapps.com/ghk.h-cdn.co/assets/18/09/1519682180-taylor-swift-girl-scouts.jpg?crop=1.0xw:1xh;center,top&resize=480:*',
-                    followed: true,
-                    fullName: 'Valentyn',
-                    status: 'React dev, now busy with my projects',
-                    location: {city: 'Kiev', country: 'Ukraine'}
-                },
-                {
-                    id: 2,
-                    photoURL: 'https://i1.wp.com/www.thesun.co.uk/wp-content/uploads/2020/03/NINTCHDBPICT000432826903.jpg?crop=22px%2C0px%2C928px%2C928px&resize=960%2C960&ssl=1',
-                    followed: true,
-                    fullName: 'Nikolai',
-                    status: 'Angular dev, now busy with my project',
-                    location: {city: 'Kiev', country: 'Ukraine'}
-                },
-                {
-                    id: 3,
-                    photoURL: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFJFqw1kZHKt03PQrjhdQEqaQ6xXzZumTmLQ&usqp=CAU',
-                    followed: false,
-                    fullName: 'Anastasia',
-                    status: 'Java dev, now busy with my projects',
-                    location: {city: 'New York', country: 'USA'}
-                },
-                {
-                    id: 4,
-                    photoURL: 'https://cdn.shopify.com/s/files/1/2090/7523/articles/8_famous_men_who_love_cigars_resize.egm_1024x1024.jpg?v=1566574567',
-                    followed: false,
-                    fullName: 'Johan',
-                    status: 'Manager, fell free to contact me',
-                    location: {city: 'Rio de Janeiro', country: 'Brazil'}
-                }
-            ]
-        )
+class Users extends React.Component<PropsType> {
+
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            .then((response: AxiosResponse<UsersType>) => {
+                this.props.setUsers(response.data.items)
+                this.props.setTotalUsersCount(response.data.totalCount)
+            })
     }
+    onPageChanged = (pageNumber: number) => {
+        this.props.setCurrentPage(pageNumber)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+            .then((response: AxiosResponse<UsersType>) => {
+                this.props.setUsers(response.data.items)
+            })
 
-    return (
-        <div>
-            {
-                props.users.map( u => <div key={u.id}>
+    }
+    render() {
+
+        const pagesCount = Math.ceil(this.props.TotalUsersCount/this.props.pageSize)
+
+        let pages = []
+
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i)
+        }
+
+        return (
+            <div>
+                <div>
+                    {pages.map( p => {
+                        return <span className={this.props.currentPage === p ? s.selectedPage : ''}
+                        onClick={ () => { this.onPageChanged(p) }}>{p}</span>
+                    })}
+
+
+                </div>
+                {
+                    this.props.users.map((u: UsersInfoType) => <div key={u.id}>
                     <span>
                         <div>
-                            <img className={s.imgUsers} src={u.photoURL} alt={`avatar`}/>
+                            <img src={u.photos.small != null ? u.photos.small : userPhoto} className={s.photoURL}
+                                 alt={`avatar`}/>
                         </div>
                         <div>
                             {u.followed
-                                ? <button onClick={ () => { props.unfollow(u.id) }}>Followed</button>
-                                : <button onClick={ () => { props.follow(u.id) }}>Unfollowed</button>}
+                                ? <button onClick={() => {
+                                    this.props.unfollow(u.id)
+                                }}>Followed</button>
+                                : <button onClick={() => {
+                                    this.props.follow(u.id)
+                                }}>Unfollowed</button>}
                         </div>
                     </span>
-                    <span>
                         <span>
-                            <div>{u.fullName}</div>
+                        <span>
+                            <div>{u.name}</div>
                             <div>{u.status}</div>
                         </span>
                         <span>
-                            <div>{u.location.country}</div>
-                            <div>{u.location.city}</div>
+                            <div>{'u.location.country'}</div>
+                            <div>{'u.location.city'}</div>
                         </span>
                     </span>
-                </div>)
-            }
-        </div>
-    )
+                    </div>)
+                }
+            </div>
+        )
+    }
 }
 
 export default Users;

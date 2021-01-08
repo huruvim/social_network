@@ -1,23 +1,24 @@
 import profileReducer, {addPostAC, changeNewTextAC} from "./profile-reducer";
 import dialogsReducer, { sendMessageAC, updateNewMessageBodyAC } from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
+import {followAC, setUsersAC, unfollowAC, setCurrentPageAC, setTotalUsersCountAC} from "./users-reducer";
 
 export type UserLocationType = {
-    city: string,
-    country: string
+    // city: string,
+    // country: string
 }
 
-export type UserType = {
+export type UsersType = {
     id: number,
-    photoURL: string
+    photos: string,
     followed: boolean,
-    fullName: string,
+    name: string,
     status: string,
     location: UserLocationType
 }
-export type UsersType = {
-    users: Array<UserType>
-}
+// export type UsersType = {
+//     users: Array<UserType>
+// }
 
 export type PostType = {
     id: number
@@ -60,6 +61,12 @@ export type ActionsTypes =
     | ReturnType<typeof changeNewTextAC>
     | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof updateNewMessageBodyAC>
+    | ReturnType<typeof followAC>
+    | ReturnType<typeof unfollowAC>
+    | ReturnType<typeof setUsersAC>
+    | ReturnType<typeof setCurrentPageAC>
+    | ReturnType<typeof setTotalUsersCountAC>
+
 
 
 const store: StoreType = {
