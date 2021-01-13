@@ -1,7 +1,9 @@
-import profileReducer, {addPostAC, changeNewTextAC} from "./profile-reducer";
-import dialogsReducer, { sendMessageAC, updateNewMessageBodyAC } from "./dialogs-reducer";
+import {addPostAC, changeNewTextAC, setUserProfile} from "./profile-reducer";
+import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
-import {follow, setUsers, unfollow, setCurrentPage, setTotalUsersCount, toggleIsFetching} from "./users-reducer";
+import {follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollow} from "./users-reducer";
+import {ProfileType} from "../components/Profile/ProfileContainer";
+import {setAuthUserData} from "./auth-reducer";
 
 export type UserLocationType = {
     // city: string,
@@ -41,6 +43,7 @@ export type DialogPageType = {
 export type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
+    profile: null | ProfileType
 }
 export type SidebarType = {}
 export type RootStateType = {
@@ -67,6 +70,9 @@ export type ActionsTypes =
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof toggleIsFetching>
+    | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof setAuthUserData>
+
 
 
 
@@ -97,7 +103,8 @@ const store: StoreType = {
                 {id: 4, message: "This is my new post", likesCount: 22},
                 {id: 5, message: "This is my first post", likesCount: 1}
             ],
-            newPostText: ""
+            newPostText: "",
+            profile: null
         },
         sidebar: {}
     },
@@ -113,7 +120,7 @@ const store: StoreType = {
     dispatch(action) {
 
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
-        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        // this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.sidebar = sidebarReducer(this._state.sidebar, action)
 
         this._callSubscriber()

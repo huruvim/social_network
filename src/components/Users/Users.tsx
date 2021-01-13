@@ -1,7 +1,9 @@
 import React from 'react'
 import s from "./Users.module.css";
 import userPhoto from "../../assets/images/alternative-img.png";
-import { UsersInfoType } from "./UsersContainer";
+import {UsersInfoType} from "./UsersContainer";
+import {NavLink} from 'react-router-dom';
+import axios, {AxiosResponse} from "axios";
 
 type PropsType = {
     totalUsersCount: number
@@ -13,9 +15,15 @@ type PropsType = {
     unfollow: (userID: number) => void
 }
 
+type FollowUserType = {
+    resultCode: number
+    messages: Array<string>,
+    data: {}
+}
+
 const Users = (props: PropsType) => {
 
-    const pagesCount = Math.ceil(props.totalUsersCount/props.pageSize)
+    const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 
     let pages = []
 
@@ -25,9 +33,11 @@ const Users = (props: PropsType) => {
 
     return <div>
         <div>
-            {pages.map( p => {
+            {pages.map(p => {
                 return <span className={props.currentPage === p ? s.selectedPage : ''}
-                             onClick={ () => { props.onPageChanged(p) }}>{p}</span>
+                             onClick={() => {
+                                 props.onPageChanged(p)
+                             }}>{p}</span>
             })}
 
 
@@ -36,17 +46,42 @@ const Users = (props: PropsType) => {
             props.users.map((u: UsersInfoType) => <div key={u.id}>
                     <span>
                         <div>
+                            <NavLink to={'/profile/' + u.id}>
                             <img src={u.photos.small != null ? u.photos.small : userPhoto} className={s.photoURL}
                                  alt={`avatar`}/>
+                            </NavLink>
                         </div>
                         <div>
                             {u.followed
                                 ? <button onClick={() => {
-                                    props.unfollow(u.id)
-                                }}>Followed</button>
+                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                                        withCredentials: true,
+                                        headers: {
+                                            'API-Key': 'cfb6e34f-6374-462a-8da5-72f5e5249b28'
+                                        }
+                                    })
+                                        .then((response: AxiosResponse<FollowUserType>) => {
+                                            if (response.data.resultCode === 0) {
+                                                props.unfollow(u.id)
+                                            }
+                                        })
+                                }}>Unfollowed</button>
                                 : <button onClick={() => {
+                                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, null, {
+                                        withCredentials: true,
+                                        headers: {
+                                            'API-Key': 'cfb6e34f-6374-462a-8da5-72f5e5249b28'
+                                        }
+                                    })
+                                        .then((response: AxiosResponse<FollowUserType>) => {
+                                            if (response.data.resultCode === 1) {
+                                                props.unfollow(u.id)
+                                            }
+                                        })
                                     props.follow(u.id)
-                                }}>Unfollowed</button>}
+
+
+                                }}>Followed</button>}
                         </div>
                     </span>
                 <span>

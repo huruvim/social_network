@@ -13,7 +13,7 @@ export type setCurrentPage = ReturnType<typeof setCurrentPage>
 export type setTotalUsersCount = ReturnType<typeof setTotalUsersCount>
 export type toggleIsFetching = ReturnType<typeof toggleIsFetching>
 
-// type initialStateType = typeof initialState
+type initialStateType = typeof initialState
 
 const initialState = {
     users: [] as Array<any>,
@@ -23,7 +23,7 @@ const initialState = {
     isFetching: true
 }
 
-const usersReducer = (state = initialState, action: ActionsTypes): typeof initialState => {
+const usersReducer = (state= initialState, action: ActionsTypes):initialStateType => {
     switch (action.type) {
         case FOLLOW: {
             return {
