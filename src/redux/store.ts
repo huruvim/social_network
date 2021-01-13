@@ -1,7 +1,7 @@
 import {addPostAC, changeNewTextAC, setUserProfile} from "./profile-reducer";
 import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
-import {follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollow, toggleFollowingProgress} from "./users-reducer";
+import {followSuccess, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollowSuccess, toggleFollowingProgress} from "./users-reducer";
 import {ProfileType} from "../components/Profile/ProfileContainer";
 import {setAuthUserData} from "./auth-reducer";
 
@@ -64,8 +64,8 @@ export type ActionsTypes =
     | ReturnType<typeof changeNewTextAC>
     | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof updateNewMessageBodyAC>
-    | ReturnType<typeof follow>
-    | ReturnType<typeof unfollow>
+    | ReturnType<typeof followSuccess>
+    | ReturnType<typeof unfollowSuccess>
     | ReturnType<typeof setUsers>
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalUsersCount>

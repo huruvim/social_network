@@ -10,12 +10,16 @@ const instans = axios.create({
 })
 
 export const usersAPI = {
-    getUsers (currentPage: number = 1, pageSize: number = 10):Promise<UsersType> {
+    getUsers(currentPage: number = 1, pageSize: number = 10): Promise<UsersType> {
         return instans.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => {
                 return response.data
             })
+    },
+    follow(userId: any) {
+        return instans.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
+    },
+    unfollow(userId: any) {
+        return instans.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
     }
-
-
 }
