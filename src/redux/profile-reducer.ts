@@ -1,5 +1,8 @@
 import {ActionsTypes, PostType, ProfilePageType} from "./store";
 import {ProfileType} from "../components/Profile/ProfileContainer";
+import {Dispatch} from "redux";
+import axios, {AxiosResponse} from "axios";
+import {toggleFollowingProgress} from "./users-reducer";
 
 const ADD_POST = "ADD-POST";
 const CHANGE_NEW_TEXT = 'CHANGE-NEW-TEXT';
@@ -20,7 +23,7 @@ const initialState: ProfilePageType = {
     profile: null
 }
 
-const profileReducer = (state = initialState, action: ActionsTypes):ProfilePageType => {
+const profileReducer = (state = initialState, action: ActionsTypes): ProfilePageType => {
     switch (action.type) {
         case ADD_POST:
             const newPost: PostType = {
@@ -66,5 +69,13 @@ export const setUserProfile = (profile: ProfileType) => {
     } as const
 }
 
+export const getUserProfile = (userId: number) => (dispatch: Dispatch<ActionsTypes>) => {
+    dispatch(toggleFollowingProgress(true, userId))
+    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
+        .then((response: AxiosResponse<ProfileType>) => {
+            dispatch(toggleFollowingProgress(false, userId))
+            dispatch(setUserProfile(response.data))
+        })
+}
 
 export default profileReducer

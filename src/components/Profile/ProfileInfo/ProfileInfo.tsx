@@ -11,6 +11,8 @@ type PropsType = {
 }
 
 const ProfileInfo = (props: PropsType) => {
+    const bgPic = 'https://encrypted-tbn0.gstatic.com/images?' +
+        'q=tbn%3AANd9GcSJGE73WTV3df9N8sP0dHchvtutUjaVM7qrTQ&usqp=CAU'
 
     if (!props.profile) {
         return <Preloader/>
@@ -20,11 +22,11 @@ const ProfileInfo = (props: PropsType) => {
         <div>
             <div>
                 <img
-                    src='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJGE73WTV3df9N8sP0dHchvtutUjaVM7qrTQ&usqp=CAU'/>
+                    src={bgPic}/>
             </div>
             <div className={s.discriptionBlock}>
                 <img src={props.profile.photos.large}/>
-                ava + discription
+                Description should be here
             </div>
         </div>
     )

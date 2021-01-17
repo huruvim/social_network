@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {AppRootStateType} from "../../redux/redux-store";
-import {follow, getUsers, setCurrentPage, toggleFollowingProgress, unfollow} from "../../redux/users-reducer";
+import {follow, unfollow, getUsers, setCurrentPage, toggleFollowingProgress} from "../../redux/users-reducer";
 import React from "react";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
@@ -52,7 +52,6 @@ class UsersContainer extends React.Component<PropsType> {
                    unfollow={this.props.unfollow}
                    users={this.props.users}
                    followingInProcess={this.props.followingInProcess}
-                   // toggleFollowingProgress={this.props.toggleFollowingProgress}
             />
         </>
     }
