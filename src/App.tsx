@@ -25,9 +25,9 @@ const App: React.FC = () => {
                 <Route path="/dialogs"
                        render={() => <DialogsContainer />}/>
                 <Route path="/profile/:userId?"
-                       render={() => <ProfileContainer isAuth />}/>
+                       render={() => <ProfileContainer />}/>
                 <Route path="/users"
-                       render={() => <UsersContainer isAuth/>}/>
+                       render={() => <UsersContainer/>}/>
                 <Route path="/login"
                        render={() => <LoginPage/>}/>
 
