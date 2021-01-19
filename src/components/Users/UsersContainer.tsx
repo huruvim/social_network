@@ -4,6 +4,7 @@ import {follow, unfollow, getUsers, setCurrentPage, toggleFollowingProgress} fro
 import React from "react";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 export type UsersInfoType = {
     name: string
@@ -70,5 +71,7 @@ let mapStateToProps = (state: AppRootStateType) => {
 
 }
 
+const AuthRedirectComponent = withAuthRedirect(UsersContainer)
+
 export default connect(mapStateToProps,
-    {follow, unfollow, setCurrentPage, toggleFollowingProgress, getUsers})(UsersContainer);
+    {follow, unfollow, setCurrentPage, toggleFollowingProgress, getUsers})(AuthRedirectComponent);

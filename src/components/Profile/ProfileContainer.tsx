@@ -1,9 +1,10 @@
 import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getUserProfile, setUserProfile} from "../../redux/profile-reducer";
+import {getUserProfile} from "../../redux/profile-reducer";
 import {AppRootStateType} from "../../redux/redux-store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
+import {mapStateToPropsForRedirect, withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 // type PropsType = {
 //     setUserProfile: (profile: ProfileType) => void,
@@ -35,18 +36,16 @@ type PathParamsType = {
     userId: string
 }
 
+
 type MapStatePropsType = {
     profile: ProfileType | null
 }
 
-type PropsType = RouteComponentProps<PathParamsType> & {
-    setUserProfile: (profile: ProfileType) => void
+export type PropsType = RouteComponentProps<PathParamsType> & {
     profile: ProfileType | null
-    me: (userId: number) => void
+    getUserProfile: (userId: number) => void
+    isAuth: boolean
 }
-
-
-
 
 class ProfileContainer extends React.Component<PropsType> {
 
@@ -55,7 +54,7 @@ class ProfileContainer extends React.Component<PropsType> {
         if (!userId) {
             userId = 2
         }
-        this.props.me(userId)
+        this.props.getUserProfile(userId)
     }
 
     render() {
@@ -65,13 +64,19 @@ class ProfileContainer extends React.Component<PropsType> {
     }
 }
 
-let mapStateToProps = (state: AppRootStateType):MapStatePropsType => {
+let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
+
+
+
+// AuthRedirectComponent = connect(mapStateToPropsForRedirect)(AuthRedirectComponent)
+
+
+let mapStateToProps = (state: AppRootStateType): MapStatePropsType => {
     return {
-        profile: state.profilePage.profile
+        profile: state.profilePage.profile,
     }
 }
 
-const WishUrlDataContainerComponent = withRouter(ProfileContainer)
+const WishUrlDataContainerComponent = withRouter(AuthRedirectComponent)
 
-export default connect(mapStateToProps,
-    {setUserProfile, me: getUserProfile})(WishUrlDataContainerComponent);
+export default connect(mapStateToProps, {getUserProfile})(WishUrlDataContainerComponent);

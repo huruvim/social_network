@@ -70,10 +70,10 @@ export const setUserProfile = (profile: ProfileType) => {
 }
 
 export const getUserProfile = (userId: number) => (dispatch: Dispatch<ActionsTypes>) => {
-    dispatch(toggleFollowingProgress(true, userId))
+    // dispatch(toggleFollowingProgress(true, userId))
     axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
         .then((response: AxiosResponse<ProfileType>) => {
-            dispatch(toggleFollowingProgress(false, userId))
+            // dispatch(toggleFollowingProgress(false, userId))
             dispatch(setUserProfile(response.data))
         })
 }

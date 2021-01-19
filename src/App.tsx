@@ -9,12 +9,13 @@ import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import {Login as LoginPage} from "./components/Login/Login";
 
 
 const App: React.FC = () => {
     return (
         <div className='app-wrapper'>
-            <HeaderContainer />
+            <HeaderContainer/>
             <Navbar/>
             <div className='app-wrapper-content'>
                 <Route path="/news" render={() => <News/>}/>
@@ -22,11 +23,13 @@ const App: React.FC = () => {
                 <Route path="/settings" render={() => <Settings/>}/>
 
                 <Route path="/dialogs"
-                       render={ () => <DialogsContainer /> }/>
+                       render={() => <DialogsContainer />}/>
                 <Route path="/profile/:userId?"
-                       render={ () => <ProfileContainer/> }/>
+                       render={() => <ProfileContainer isAuth />}/>
                 <Route path="/users"
-                       render={ () => <UsersContainer /> }/>
+                       render={() => <UsersContainer isAuth/>}/>
+                <Route path="/login"
+                       render={() => <LoginPage/>}/>
 
 
             </div>
