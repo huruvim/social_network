@@ -9,6 +9,8 @@ type PropsType = {
             large: string
         }
     } | null
+    status: string
+    updateStatus: (status: string) => void
 }
 
 const ProfileInfo = (props: PropsType) => {
@@ -26,8 +28,7 @@ const ProfileInfo = (props: PropsType) => {
             </div>
             <div className={s.discriptionBlock}>
                 <img src={props.profile.photos.large}/>
-                <ProfileStatus status={"Hello my friends"}/>
-                Description should be here
+                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
             </div>
         </div>
     )

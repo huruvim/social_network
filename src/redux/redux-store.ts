@@ -12,6 +12,7 @@ const reducer = combineReducers({
     usersPage: usersReducer,
     sidebar: sidebarReducer,
     auth: authReducer
+
 })
 
 const store: Store = createStore(reducer, applyMiddleware(thunk))

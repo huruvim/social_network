@@ -1,7 +1,15 @@
-import {addPostAC, changeNewTextAC, setUserProfile} from "./profile-reducer";
+import {addPostAC, changeNewTextAC, setStatus, setUserProfile, updateStatusAC} from "./profile-reducer";
 import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
-import {followSuccess, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollowSuccess, toggleFollowingProgress} from "./users-reducer";
+import {
+    followSuccess,
+    setCurrentPage,
+    setTotalUsersCount,
+    setUsers,
+    toggleFollowingProgress,
+    toggleIsFetching,
+    unfollowSuccess
+} from "./users-reducer";
 import {ProfileType} from "../components/Profile/ProfileContainer";
 import {setAuthUserData} from "./auth-reducer";
 
@@ -44,6 +52,7 @@ export type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
     profile: null | ProfileType
+    status: string | null
 }
 export type SidebarType = {}
 export type RootStateType = {
@@ -73,6 +82,8 @@ export type ActionsTypes =
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setAuthUserData>
     | ReturnType<typeof toggleFollowingProgress>
+    | ReturnType<typeof setStatus>
+    | ReturnType<typeof updateStatusAC>
 
 
 
@@ -105,7 +116,8 @@ const store: StoreType = {
                 {id: 5, message: "This is my first post", likesCount: 1}
             ],
             newPostText: "",
-            profile: null
+            profile: null,
+            status: null
         },
         sidebar: {}
     },

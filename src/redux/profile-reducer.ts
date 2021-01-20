@@ -3,13 +3,24 @@ import {ProfileType} from "../components/Profile/ProfileContainer";
 import {Dispatch} from "redux";
 import axios, {AxiosResponse} from "axios";
 import {toggleFollowingProgress} from "./users-reducer";
+import {profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = "ADD-POST";
 const CHANGE_NEW_TEXT = 'CHANGE-NEW-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_STATUS = 'SET_STATUS';
+const UPDATE_STATUS = 'UPDATE_STATUS';
 export type addPostAC = ReturnType<typeof addPostAC>
 export type changeNewTextAC = ReturnType<typeof changeNewTextAC>
 export type setUserProfile = ReturnType<typeof setUserProfile>
+export type setStatus = ReturnType<typeof setStatus>
+export type updateStatus = ReturnType<typeof updateStatus>
+
+type UpdateStatusType = {
+    resultCode: number
+    messages: string
+    data: {}
+}
 
 const initialState: ProfilePageType = {
     posts: [
@@ -20,7 +31,8 @@ const initialState: ProfilePageType = {
         {id: 5, message: "This is my first post", likesCount: 1}
     ],
     newPostText: "",
-    profile: null
+    profile: null,
+    status: null
 }
 
 const profileReducer = (state = initialState, action: ActionsTypes): ProfilePageType => {
@@ -46,6 +58,16 @@ const profileReducer = (state = initialState, action: ActionsTypes): ProfilePage
                 ...state,
                 profile: action.profile
             }
+        case SET_STATUS:
+            return {
+                ...state,
+                status: action.status
+            }
+        case UPDATE_STATUS:
+            return {
+                ...state,
+                status: action.status
+            }
         default:
             return state
     }
@@ -68,13 +90,39 @@ export const setUserProfile = (profile: ProfileType) => {
         profile
     } as const
 }
+export const setStatus = (status: string) => {
+    return {
+        type: SET_STATUS,
+        status
+    } as const
+}
+export const updateStatusAC = (status: string) => {
+    return {
+        type: UPDATE_STATUS,
+        status
+    } as const
+}
+
 
 export const getUserProfile = (userId: number) => (dispatch: Dispatch<ActionsTypes>) => {
-    // dispatch(toggleFollowingProgress(true, userId))
-    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
+    usersAPI.getProfile(userId)
         .then((response: AxiosResponse<ProfileType>) => {
-            // dispatch(toggleFollowingProgress(false, userId))
             dispatch(setUserProfile(response.data))
+        })
+}
+export const getStatus = (userId: number) => (dispatch: Dispatch<ActionsTypes>) => {
+    profileAPI.getStatus(userId)
+        .then((response: AxiosResponse<string>) => {
+            debugger
+            dispatch(setStatus(response.data))
+        })
+}
+export const updateStatus = (status: string) => (dispatch: Dispatch<ActionsTypes>) => {
+    profileAPI.updateStatus(status)
+        .then((response: AxiosResponse<UpdateStatusType>) => {
+            if (response.data.resultCode === 0) {
+                dispatch(updateStatusAC(response.data.messages))
+            }
         })
 }
 
