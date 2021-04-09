@@ -14,7 +14,7 @@ const initialState = {
     id: null as number | null,
     email: null as string | null,
     login: null as string | null,
-    isAuth: false
+    isAuth: true
 }
 
 const authReducer = (state = initialState, action: ActionsTypes): initialStateType => {
@@ -39,7 +39,6 @@ export const setAuthUserData = (id: number, email: string, login: string) => {
 }
 
 export const getAuthUserData = () => (dispatch: Dispatch) => {
-    debugger
     authAPI.me()
         .then((response: AxiosResponse<AuthDataType>) => {
                 if (response.data.resultCode === 0) {

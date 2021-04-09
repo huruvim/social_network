@@ -13,7 +13,7 @@ export const mapStateToPropsForRedirect = (state: AppRootStateType): MapStatePro
     }
 }
 
-export function withAuthRedirect<WCP>(Component: React.ComponentType<WCP>) {
+export function  withAuthRedirect<WCP>(Component: React.ComponentType<WCP>) {
     function RedirectComponent(props: WCP & MapStatePropsForRedirectType) {
         if (!props.isAuth) return <Redirect to={"/login"}/>
         else return <Component {...props as unknown as WCP}/>

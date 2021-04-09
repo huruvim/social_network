@@ -11,7 +11,6 @@ const instance = axios.create({
 
 export const usersAPI = {
     getUsers(currentPage: number = 1, pageSize: number = 10): Promise<UsersType> {
-        debugger
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => {
                 return response.data
@@ -37,14 +36,12 @@ export const profileAPI = {
         return instance.get(`profile/status/${userId}`)
     },
     updateStatus(status: string) {
-        debugger
         return instance.put(`profile/status`,{ status })
     }
 }
 
 export const authAPI = {
     me() {
-        debugger
         return instance.get(`auth/me`)
     }
 }

@@ -1,5 +1,5 @@
-import {addPostAC, changeNewTextAC, setStatus, setUserProfile, updateStatusAC} from "./profile-reducer";
-import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from "./dialogs-reducer";
+import {addPostAC, setStatus, setUserProfile} from "./profile-reducer";
+import dialogsReducer, {sendMessageAC} from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 import {
     followSuccess,
@@ -46,7 +46,7 @@ export type MessageType = {
 export type DialogPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessageType>
-    newMessageBody: string
+    // newMessageBody?: string
 }
 export type ProfilePageType = {
     posts: Array<PostType>
@@ -70,9 +70,7 @@ export type StoreType = {
 
 export type ActionsTypes =
     | ReturnType<typeof addPostAC>
-    | ReturnType<typeof changeNewTextAC>
     | ReturnType<typeof sendMessageAC>
-    | ReturnType<typeof updateNewMessageBodyAC>
     | ReturnType<typeof followSuccess>
     | ReturnType<typeof unfollowSuccess>
     | ReturnType<typeof setUsers>
@@ -83,7 +81,6 @@ export type ActionsTypes =
     | ReturnType<typeof setAuthUserData>
     | ReturnType<typeof toggleFollowingProgress>
     | ReturnType<typeof setStatus>
-    | ReturnType<typeof updateStatusAC>
 
 
 
@@ -105,7 +102,6 @@ const store: StoreType = {
                 {id: 4, message: "yo"},
                 {id: 5, message: "yo"}
             ],
-            newMessageBody: ''
         },
         profilePage: {
             posts: [

@@ -1,17 +1,13 @@
 import {ActionsTypes, PostType, ProfilePageType} from "./store";
 import {ProfileType} from "../components/Profile/ProfileContainer";
 import {Dispatch} from "redux";
-import axios, {AxiosResponse} from "axios";
-import {toggleFollowingProgress} from "./users-reducer";
+import {AxiosResponse} from "axios";
 import {profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = "ADD-POST";
-const CHANGE_NEW_TEXT = 'CHANGE-NEW-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
-const UPDATE_STATUS = 'UPDATE_STATUS';
 export type addPostAC = ReturnType<typeof addPostAC>
-export type changeNewTextAC = ReturnType<typeof changeNewTextAC>
 export type setUserProfile = ReturnType<typeof setUserProfile>
 export type setStatus = ReturnType<typeof setStatus>
 export type updateStatus = ReturnType<typeof updateStatus>
@@ -40,7 +36,7 @@ const profileReducer = (state = initialState, action: ActionsTypes): ProfilePage
         case ADD_POST:
             const newPost: PostType = {
                 id: 5,
-                message: state.newPostText,
+                message: action.post,
                 likesCount: 0,
             }
             return {
@@ -48,40 +44,27 @@ const profileReducer = (state = initialState, action: ActionsTypes): ProfilePage
                 posts: [newPost, ...state.posts],
                 newPostText: ''
             }
-        case CHANGE_NEW_TEXT:
-            return {
-                ...state,
-                newPostText: action.newText
-            }
-        case SET_USER_PROFILE:
+        case SET_USER_PROFILE: {
             return {
                 ...state,
                 profile: action.profile
             }
-        case SET_STATUS:
+        }
+        case SET_STATUS: {
             return {
                 ...state,
                 status: action.status
             }
-        case UPDATE_STATUS:
-            return {
-                ...state,
-                status: action.status
-            }
+        }
         default:
             return state
     }
 }
 
-export const addPostAC = () => {
+export const addPostAC = (post: string) => {
     return {
-        type: ADD_POST
-    } as const
-}
-export const changeNewTextAC = (text: string) => {
-    return {
-        type: CHANGE_NEW_TEXT,
-        newText: text
+        type: ADD_POST,
+        post
     } as const
 }
 export const setUserProfile = (profile: ProfileType) => {
@@ -96,12 +79,6 @@ export const setStatus = (status: string) => {
         status
     } as const
 }
-export const updateStatusAC = (status: string) => {
-    return {
-        type: UPDATE_STATUS,
-        status
-    } as const
-}
 
 
 export const getUserProfile = (userId: number) => (dispatch: Dispatch<ActionsTypes>) => {
@@ -113,7 +90,6 @@ export const getUserProfile = (userId: number) => (dispatch: Dispatch<ActionsTyp
 export const getStatus = (userId: number) => (dispatch: Dispatch<ActionsTypes>) => {
     profileAPI.getStatus(userId)
         .then((response: AxiosResponse<string>) => {
-            debugger
             dispatch(setStatus(response.data))
         })
 }
@@ -121,7 +97,7 @@ export const updateStatus = (status: string) => (dispatch: Dispatch<ActionsTypes
     profileAPI.updateStatus(status)
         .then((response: AxiosResponse<UpdateStatusType>) => {
             if (response.data.resultCode === 0) {
-                dispatch(updateStatusAC(response.data.messages))
+                dispatch(setStatus(status))
             }
         })
 }

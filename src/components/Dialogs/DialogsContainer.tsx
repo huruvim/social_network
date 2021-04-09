@@ -1,5 +1,5 @@
 import React from 'react';
-import {sendMessageAC, updateNewMessageBodyAC} from "../../redux/dialogs-reducer";
+import {sendMessageAC} from "../../redux/dialogs-reducer";
 import {AppRootStateType} from "../../redux/redux-store";
 import {Dispatch, compose} from "redux";
 import Dialogs from "./Dialogs";
@@ -14,8 +14,7 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToPropsType = {
-    updateNewMessageBody: (text: string) => void
-    sendMessage: () => void
+    sendMessage: (message: string) => void
 }
 
 const mapStateToProps = (state: AppRootStateType):MapStateToPropsType => {
@@ -26,29 +25,12 @@ const mapStateToProps = (state: AppRootStateType):MapStateToPropsType => {
 }
 const mapDispatchToProps = (dispatch: Dispatch):MapDispatchToPropsType => {
     return {
-        updateNewMessageBody: (body: string) => {
-            dispatch(updateNewMessageBodyAC(body))
-        },
-        sendMessage: () => {
-            dispatch(sendMessageAC())
+        sendMessage: (message: string) => {
+            dispatch(sendMessageAC(message))
         },
     }
 }
 
-
-// const AuthRedirectComponent = withAuthRedirect(Dialogs)
-//
-// const DialogsContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {},
-//     AppRootStateType>(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent);
-//
-// const yes = compose(
-//     connect<MapStateToPropsType, MapDispatchToPropsType, {},
-//         AppRootStateType>(mapStateToProps, mapDispatchToProps),
-//         withAuthRedirect
-// )(Dialogs)
-
 export default compose<React.ComponentType>(
-    connect<MapStateToPropsType, MapDispatchToPropsType, {},
-        AppRootStateType>(mapStateToProps, mapDispatchToProps),
-    withAuthRedirect
-)(Dialogs)
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect)(Dialogs)

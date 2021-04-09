@@ -1,7 +1,6 @@
 import React from 'react';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {Redirect} from "react-router-dom";
 
 type PropsType = {
     profile: {
@@ -16,14 +15,11 @@ type PropsType = {
 }
 
 const Profile = (props: PropsType) => {
-
-
-
     return (
-        <div>
+        <>
             <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
-            <MyPostsContainer/>
-        </div>
+            <MyPostsContainer />
+        </>
     )
 }
 

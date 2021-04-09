@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, {ChangeEvent} from 'react';
 //
 type PropsType = {
     status: string
@@ -6,8 +6,6 @@ type PropsType = {
 }
 
 class ProfileStatus extends React.Component<PropsType> {
-
-    statusInputRef = React.createRef()
 
     state = {
         editMode: false,
@@ -32,18 +30,29 @@ class ProfileStatus extends React.Component<PropsType> {
         })
     }
 
+    componentDidUpdate(prevProps: Readonly<PropsType>, prevState: Readonly<{}>) {
+        // console.log('componentDidUpdate called')
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
+    }
+
     render() {
+        // console.log('render called')
         return (
             <div>
                 {!this.state.editMode &&
                 <div>
-                    <span onDoubleClick={this.activateEditMode}>{this.state.status || 'My status is here'}</span>
+                    <span onDoubleClick={this.activateEditMode}>{this.props.status || 'My status is here'}</span>
                 </div>
                 }
                 {this.state.editMode &&
-                    <div>
-                        <input onChange={this.onStatusChange} autoFocus onBlur={this.deactivateEditMode} value={this.state.status}/>
-                    </div>
+                <div>
+                    <input onChange={this.onStatusChange} autoFocus onBlur={this.deactivateEditMode}
+                           value={this.state.status}/>
+                </div>
                 }
             </div>
         )
