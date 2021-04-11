@@ -23,7 +23,6 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
         addNewPost: (post: string) => {
-            debugger
             dispatch(addPostAC(post))
         }
     }
