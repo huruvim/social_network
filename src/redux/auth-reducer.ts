@@ -41,7 +41,7 @@ export const setAuthUserData = (id: number, email: string, login: string, isAuth
 }
 //tc
 export const getAuthUserData = () => (dispatch: Dispatch) => {
-    authAPI.me()
+    return authAPI.me()
         .then((response: AxiosResponse<AuthDataType>) => {
                 if (response.data.resultCode === 0) {
                     const {id, login, email} = response.data.data
