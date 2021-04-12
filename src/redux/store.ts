@@ -12,7 +12,7 @@ import {
 } from "./users-reducer";
 import {ProfileType} from "../components/Profile/ProfileContainer";
 import {setAuthUserData} from "./auth-reducer";
-import {initiolizedSuccess} from "./app-reducer";
+import {initializedSuccess} from "./app-reducer";
 
 export type UserLocationType = {
     // city: string,
@@ -80,7 +80,7 @@ export type ActionsTypes =
     | ReturnType<typeof toggleIsFetching>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setAuthUserData>
-    | ReturnType<typeof initiolizedSuccess>
+    | ReturnType<typeof initializedSuccess>
     | ReturnType<typeof toggleFollowingProgress>
     | ReturnType<typeof setStatus>
 

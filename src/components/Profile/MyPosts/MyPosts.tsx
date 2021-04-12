@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import {PostType} from "../../../redux/store";
@@ -14,11 +14,11 @@ type PropsType = {
 }
 
 
-
-const MyPosts = (props: PropsType) => {
-
+const MyPosts = React.memo((props: PropsType) => {
+    console.log("rerender!");
+    console.log(props);
     const postsElements =
-        props.posts.map( p => <div> <Post message={p.message} likesCount={p.likesCount}/> </div> );
+        props.posts.map(p => <div key={p.id}><Post message={p.message} likesCount={p.likesCount}/></div>);
 
     const addNewPost = (e: any) => {
         props.addNewPost(e.newPostBody)
@@ -29,11 +29,11 @@ const MyPosts = (props: PropsType) => {
             <h3>My posts</h3>
             <AddPostFormRedux onSubmit={addNewPost}/>
             <div className={s.posts}>
-                { postsElements }
-             </div>
+                {postsElements}
+            </div>
         </div>
     )
-}
+},);
 
 const maxLength10 = maxLengthCreator(10)
 

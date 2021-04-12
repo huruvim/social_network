@@ -56,6 +56,6 @@ const mapStateToProps = (state: AppRootStateType) => ({
     initialized: state.app.initialized
 })
 
-export default compose<React.FC>(
+export default compose<React.ClassicComponentClass>(
     connect(mapStateToProps, {initializeApp}),
     withRouter)(App);

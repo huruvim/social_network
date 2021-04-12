@@ -15,6 +15,7 @@ type PropsType = {
 }
 
 const Profile = (props: PropsType) => {
+    // console.log("rerender Profile C")
     return (
         <>
             <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>

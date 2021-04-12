@@ -1,7 +1,7 @@
 import {ActionsTypes} from "./store";
 import {usersAPI} from "../api/api";
 import {AxiosResponse} from "axios";
-import { FollowUserType } from "../components/Users/Users";
+import {FollowUserType} from "../components/Users/Users";
 import {Dispatch} from "redux";
 
 const FOLLOW = "FOLLOW";
@@ -121,15 +121,17 @@ export const toggleFollowingProgress = (isFetching: boolean, userId: number) => 
     } as const
 }
 
-export const getUsers = (currentPage: number, pageSize: number) => {
-
+export const request = (page: number, pageSize: number) => {
+    debugger
     return (dispatch: Dispatch<ActionsTypes>) => {
         dispatch(toggleIsFetching(true))
-        usersAPI.getUsers(currentPage, pageSize).then((data) => {
-            dispatch(toggleIsFetching(false))
-            dispatch(setUsers(data.items))
-            dispatch(setTotalUsersCount(data.totalCount))
-        })
+        dispatch(setCurrentPage(page))
+        usersAPI.getUsers(page, pageSize)
+            .then((data) => {
+                dispatch(toggleIsFetching(false))
+                dispatch(setUsers(data.items))
+                dispatch(setTotalUsersCount(data.totalCount))
+            })
     }
 }
 

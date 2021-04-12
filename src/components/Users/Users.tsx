@@ -20,7 +20,6 @@ export type FollowUserType = {
     messages: Array<string>,
     data: {}
 }
-
 const Users = (props: PropsType) => {
 
     const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
@@ -39,8 +38,6 @@ const Users = (props: PropsType) => {
                                  props.onPageChanged(p)
                              }}>{p}</span>
             })}
-
-
         </div>
         {
             props.users.map((u: UsersInfoType) => <div key={u.id}>
