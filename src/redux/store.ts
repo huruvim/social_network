@@ -1,4 +1,4 @@
-import {addPostAC, setStatus, setUserProfile} from "./profile-reducer";
+import {addPostAC, deletePost, setStatus, setUserProfile} from "./profile-reducer";
 import dialogsReducer, {sendMessageAC} from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 import {
@@ -83,6 +83,7 @@ export type ActionsTypes =
     | ReturnType<typeof initializedSuccess>
     | ReturnType<typeof toggleFollowingProgress>
     | ReturnType<typeof setStatus>
+    | ReturnType<typeof deletePost>
 
 
 
