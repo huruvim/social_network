@@ -68,52 +68,27 @@ const profileReducer = (state = initialState, action: ActionsTypes): ProfilePage
             return state
     }
 }
+//ac
+export const addPostAC = (post: string) => ({type: ADD_POST, post} as const)
+export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile} as const)
+export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
+export const deletePost = (postId: number) => ({type: DELETE_POST, postId} as const)
 
-export const addPostAC = (post: string) => {
-    return {
-        type: ADD_POST,
-        post
-    } as const
-}
-export const setUserProfile = (profile: ProfileType) => {
-    return {
-        type: SET_USER_PROFILE,
-        profile
-    } as const
-}
-export const setStatus = (status: string) => {
-    return {
-        type: SET_STATUS,
-        status
-    } as const
-}
-export const deletePost = (postId: number) => {
-    return {
-        type: DELETE_POST,
-        postId
-    } as const
+//tc
+export const getUserProfile = (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
+    const response: AxiosResponse<ProfileType> = await usersAPI.getProfile(userId)
+    dispatch(setUserProfile(response.data))
 }
 
-
-export const getUserProfile = (userId: number) => (dispatch: Dispatch<ActionsTypes>) => {
-    usersAPI.getProfile(userId)
-        .then((response: AxiosResponse<ProfileType>) => {
-            dispatch(setUserProfile(response.data))
-        })
+export const getStatus = (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
+    const response: AxiosResponse<string> = await profileAPI.getStatus(userId)
+    dispatch(setStatus(response.data))
 }
-export const getStatus = (userId: number) => (dispatch: Dispatch<ActionsTypes>) => {
-    profileAPI.getStatus(userId)
-        .then((response: AxiosResponse<string>) => {
-            dispatch(setStatus(response.data))
-        })
-}
-export const updateStatus = (status: string) => (dispatch: Dispatch<ActionsTypes>) => {
-    profileAPI.updateStatus(status)
-        .then((response: AxiosResponse<UpdateStatusType>) => {
-            if (response.data.resultCode === 0) {
-                dispatch(setStatus(status))
-            }
-        })
+export const updateStatus = (status: string) => async (dispatch: Dispatch<ActionsTypes>) => {
+    const response: AxiosResponse<UpdateStatusType> = await profileAPI.updateStatus(status)
+    if (response.data.resultCode === 0) {
+        dispatch(setStatus(status))
+    }
 }
 
 export default profileReducer

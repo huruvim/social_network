@@ -28,50 +28,33 @@ const authReducer = (state = initialState, action: ActionsTypes): initialStateTy
     }
 }
 //ac
-export const setAuthUserData = (id: number, email: string, login: string, isAuth: boolean) => {
-    return {
-        type: SET_USER_DATA,
-        payload: {
-            id,
-            email,
-            login,
-            isAuth
-        }
-    } as const
-}
+export const setAuthUserData = (id: number, email: string, login: string, isAuth: boolean) =>
+    ({type: SET_USER_DATA, payload: {id, email, login, isAuth}} as const)
+
 //tc
-export const getAuthUserData = () => (dispatch: Dispatch) => {
-    return authAPI.me()
-        .then((response: AxiosResponse<AuthDataType>) => {
-                if (response.data.resultCode === 0) {
-                    const {id, login, email} = response.data.data
-                    dispatch(setAuthUserData(id, email, login, true))
-                }
-            }
-        )
+export const getAuthUserData = () => async (dispatch: Dispatch) => {
+    const response: AxiosResponse<AuthDataType> = await authAPI.me()
+    if (response.data.resultCode === 0) {
+        const {id, login, email} = response.data.data
+        dispatch(setAuthUserData(id, email, login, true))
+    }
 }
-export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch) => {
-    authAPI.login(email, password, rememberMe)
-        .then((response: AxiosResponse<any>) => {
-                if (response.data.resultCode === 0) {
-                    // @ts-ignore
-                    dispatch(getAuthUserData())
-                } else {
-                    const errorMessage =  response.data.messages ? response.data.messages[0] : "Some error occurred"
-                    dispatch(stopSubmit('login', {_error: errorMessage}))
-                }
-            }
-        )
+export const login = (email: string, password: string, rememberMe: boolean) => async (dispatch: Dispatch) => {
+    const response: AxiosResponse<any> = await authAPI.login(email, password, rememberMe)
+    if (response.data.resultCode === 0) {
+        // @ts-ignore
+        dispatch(getAuthUserData())
+    } else {
+        const errorMessage = response.data.messages ? response.data.messages[0] : "Some error occurred"
+        dispatch(stopSubmit('login', {_error: errorMessage}))
+    }
 }
-export const logout = () => (dispatch: Dispatch) => {
-    authAPI.logout()
-        .then((response: AxiosResponse<AuthDataType>) => {
-                if (response.data.resultCode === 0) {
-                    // @ts-ignore
-                    dispatch(setAuthUserData(null, null, null, false))
-                }
-            }
-        )
+export const logout = () => async (dispatch: Dispatch) => {
+    const response = await authAPI.logout()
+    if (response.data.resultCode === 0) {
+        // @ts-ignore
+        dispatch(setAuthUserData(null, null, null, false))
+    }
 }
 
 export default authReducer

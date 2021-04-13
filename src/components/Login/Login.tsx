@@ -1,7 +1,7 @@
 import React from 'react';
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {Input} from "../common/FormsControls/FormsControls";
-import {maxLengthCreator, required} from "../../utils/validators/validators";
+import {InjectedFormProps, reduxForm} from "redux-form";
+import {createField, Input} from "../common/FormsControls/FormsControls";
+import {required} from "../../utils/validators/validators";
 import {connect} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
@@ -13,25 +13,15 @@ type FormDataType = {
     password: string
     rememberMe: boolean
 }
-// const maxLength30 = maxLengthCreator(30)
 
 
-
-export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error,}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field component={Input} placeholder={"Email"} name={"email"}
-                       validate={[required]}/>
-            </div>
-            <div>
-                <Field component={Input} name={"password"} placeholder={"Password"} type={"password"}
-                       validate={[required]}/>
-            </div>
-            <div>
-                <Field component={Input} name={"rememberMe"} type={"checkbox"}/>Remember me
-            </div>
-            {props.error && <div className={styles.fromSummeryError}>{props.error}</div>}
+        <form onSubmit={handleSubmit}>
+            {createField("email", [required], Input, "Email")}
+            {createField("password", [required], Input, "Password", {type: "password"})}
+            {createField("rememberMe", [], Input, null, {type: "checkbox"}, "Remember me")}
+            {error && <div className={styles.fromSummeryError}>{error}</div>}
             <div>
                 <button>Login</button>
             </div>

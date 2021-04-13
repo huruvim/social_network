@@ -34,12 +34,7 @@ const dialogsReducer = (state= initialState, action: ActionsTypes):DialogPageTyp
             return state
     }
 }
-
-export const sendMessageAC = (message: string) => {
-    return {
-        type: SEND_MESSAGE,
-        message
-    } as const
-}
+//ac
+export const sendMessageAC = (message: string) => ({type: SEND_MESSAGE, message} as const)
 
 export default dialogsReducer

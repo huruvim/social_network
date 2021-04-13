@@ -28,16 +28,6 @@ export type UsersType = {
     totalCount: number
 }
 
-
-// type MSTPType = {
-//     users: Array<any>
-//     pageSize: number
-//     totalUsersCount: number
-//     currentPage: number
-//     isFetching: boolean
-//     followingInProcess: Array<number>
-// }
-
 type PropsType = {
     users: Array<any>
     pageSize: number
@@ -56,11 +46,13 @@ class UsersContainer extends React.Component<PropsType> {
 
 
     componentDidMount() {
-        this.props.request(this.props.currentPage, this.props.pageSize)
+        const {currentPage, pageSize} = this.props
+        this.props.request(currentPage, pageSize)
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.request(pageNumber, this.props.pageSize)
+        const {pageSize} = this.props
+        this.props.request(pageNumber, pageSize)
     }
 
     render() {
@@ -90,12 +82,6 @@ let mapStateToProps = (state: AppRootStateType) => {
         followingInProcess: getFollowingInProcess(state)
     }
 }
-
-// export default compose<ComponentType>(
-//     connect(mapStateToProps,
-//         {follow, unfollow, setCurrentPage, toggleFollowingProgress, requestUsers}),
-// )(UsersContainer);
-
 
 export default compose<ComponentType>(
     connect(
